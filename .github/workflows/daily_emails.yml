@@ -1,0 +1,31 @@
+name: Daily Portfolio Emails
+
+on:
+  schedule:
+    # Runs at 8:00 AM Central Time (UTC-5 standard / UTC-6 daylight)
+    # 14:00 UTC = 8:00 AM CST  |  13:00 UTC = 8:00 AM CDT
+    - cron: '0 13 * * 1-5'   # weekdays only — change to '0 13 * * *' for 7 days
+  workflow_dispatch:           # allows manual trigger from GitHub website
+
+jobs:
+  send-emails:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install yfinance>=0.2.40 anthropic>=0.40.0 numpy>=1.26.0
+
+      - name: Run portfolio monitor and send emails
+        env:
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          ANTHROPIC_API_KEY:  ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python main.py

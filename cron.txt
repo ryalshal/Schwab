@@ -1,0 +1,74 @@
+# ── Scheduling the pipeline ────────────────────────────────────────────────────
+#
+# The pipeline (main.py) should run once per weekday after market close.
+# US equities close at 16:00 ET; run at 17:05 to allow option data to settle.
+#
+# ── Unix / macOS cron (crontab -e) ────────────────────────────────────────────
+#
+#   5 17 * * 1-5 cd /path/to/AI\ Trading && /path/to/venv/bin/python main.py >> logs/monitor.log 2>&1
+#
+# Minutes explanation:
+#   5 17 * * 1-5
+#   │  │        └── Mon–Fri only
+#   │  └─────────── 17:05 in the server's local time (set server to US/Eastern)
+#   └────────────── :05 past the hour
+#
+# To install: run `crontab -e` and paste the line above (adjusted for your paths).
+# To verify:  run `crontab -l`
+# Logs:       mkdir -p logs  # create the log directory first
+#
+# ── Windows Task Scheduler ─────────────────────────────────────────────────────
+#
+# From an elevated PowerShell prompt, run:
+#
+#   $action  = New-ScheduledTaskAction `
+#       -Execute "C:\path\to\venv\Scripts\python.exe" `
+#       -Argument "C:\Users\Ryana\AI Trading\main.py" `
+#       -WorkingDirectory "C:\Users\Ryana\AI Trading"
+#
+#   $trigger = New-ScheduledTaskTrigger `
+#       -Weekly -DaysOfWeek Monday,Tuesday,Wednesday,Thursday,Friday `
+#       -At "5:05PM"
+#
+#   Register-ScheduledTask `
+#       -TaskName "PortfolioMonitor" `
+#       -Action $action `
+#       -Trigger $trigger `
+#       -RunLevel Highest
+#
+# To redirect output to a log file, wrap python.exe in a cmd /c call:
+#
+#   $action = New-ScheduledTaskAction `
+#       -Execute "cmd.exe" `
+#       -Argument '/c "C:\path\to\venv\Scripts\python.exe" "C:\Users\Ryana\AI Trading\main.py" >> "C:\Users\Ryana\AI Trading\logs\monitor.log" 2>&1' `
+#       -WorkingDirectory "C:\Users\Ryana\AI Trading"
+#
+# ── Dashboard ─────────────────────────────────────────────────────────────────
+#
+# The dashboard (dashboard.py) is a long-running Streamlit process.
+# Start it manually or via a persistent service (PM2, launchd, systemd, NSSM):
+#
+#   streamlit run dashboard.py
+#
+# Then open http://localhost:8501 in a browser.
+# The dashboard caches data for 5 minutes; click Refresh to force a new pull.
+#
+# ── Telegram notifier ─────────────────────────────────────────────────────────
+#
+# 1. Create a bot at https://t.me/BotFather and get the token.
+# 2. Start a chat with your bot and get the chat ID via:
+#      curl https://api.telegram.org/bot<TOKEN>/getUpdates
+# 3. Set env vars before running main.py:
+#      export TELEGRAM_BOT_TOKEN="123456:ABC-..."
+#      export TELEGRAM_CHAT_ID="987654321"
+# 4. Enable in config.py:
+#      NOTIFIER_TELEGRAM_ENABLED = True
+#
+# ── iMessage notifier (macOS only) ────────────────────────────────────────────
+#
+# 1. Set in config.py:
+#      NOTIFIER_IMESSAGE_ENABLED   = True
+#      NOTIFIER_IMESSAGE_RECIPIENT = "+15551234567"  # or Apple ID email
+# 2. The machine running main.py must be a Mac with Messages.app signed in.
+# 3. Grant Terminal (or the Python process) access to Automation in
+#    System Settings → Privacy & Security → Automation.

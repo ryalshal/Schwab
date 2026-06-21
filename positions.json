@@ -1,0 +1,84 @@
+[
+  {
+    "id": "NOW_120C_JAN27",
+    "asset_type": "option",
+    "ticker": "NOW",
+    "option_type": "call",
+    "strike": 120.0,
+    "expiry": "2027-01-15",
+    "entry_price": 10.90,
+    "contracts": 3,
+    "entry_date": "2026-06-21",
+    "target_price": 30.00,
+    "stop_price": 4.00
+  },
+  {
+    "id": "NOK_15C_JAN27",
+    "asset_type": "option",
+    "ticker": "NOK",
+    "option_type": "call",
+    "strike": 15.0,
+    "expiry": "2027-01-15",
+    "entry_price": 2.70,
+    "contracts": 4,
+    "entry_date": "2026-06-21",
+    "target_price": 8.00,
+    "stop_price": 0.80
+  },
+  {
+    "id": "NOK_20C_JAN27",
+    "asset_type": "option",
+    "ticker": "NOK",
+    "option_type": "call",
+    "strike": 20.0,
+    "expiry": "2027-01-15",
+    "entry_price": 1.65,
+    "contracts": 2,
+    "entry_date": "2026-06-21",
+    "target_price": 6.00,
+    "stop_price": 0.40
+  },
+  {
+    "id": "HIMS_35C_AUG26",
+    "asset_type": "option",
+    "ticker": "HIMS",
+    "option_type": "call",
+    "strike": 35.0,
+    "expiry": "2026-08-21",
+    "entry_price": 6.30,
+    "contracts": 1,
+    "entry_date": "2026-06-21",
+    "target_price": 15.00,
+    "stop_price": 2.00
+  },
+  {
+    "id": "MP_SHARES",
+    "asset_type": "shares",
+    "ticker": "MP",
+    "entry_price": 60.88,
+    "contracts": 8,
+    "entry_date": "2026-06-21",
+    "target_price": 110.00,
+    "stop_price": 45.00
+  },
+  {
+    "id": "OSCR_SHARES",
+    "asset_type": "shares",
+    "ticker": "OSCR",
+    "entry_price": 28.40,
+    "contracts": 10,
+    "entry_date": "2026-06-21",
+    "target_price": 40.00,
+    "stop_price": 20.00
+  },
+  {
+    "id": "VST_SHARES",
+    "asset_type": "shares",
+    "ticker": "VST",
+    "entry_price": 163.75,
+    "contracts": 2,
+    "entry_date": "2026-06-21",
+    "target_price": 240.00,
+    "stop_price": 120.00
+  }
+]

@@ -84,8 +84,8 @@ df = pd.DataFrame(positions)
 
 # ─── Book constants ───────────────────────────────────────────────────────────
 
-TOTAL_BOOK   = 8100.0
-cash_reserve = TOTAL_BOOK * 0.15
+TOTAL_BOOK   = 7290.0
+cash_reserve = 900.0
 deployed     = TOTAL_BOOK - cash_reserve
 
 # Scale position sizes to fit the book
